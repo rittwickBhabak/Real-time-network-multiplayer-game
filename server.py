@@ -70,7 +70,6 @@ class Server():
         print(f'Player {name} joined server...')
         return self.count 
         
-
     def callback(self, connectionSocket, data):
         # print(f"Data: {data}")
         data = json.loads(data)
@@ -117,6 +116,13 @@ class Server():
                     if player_id!=p_id:
                         tcp_client = get_a_tcp_client(addr[0], addr[1])
                         tcp_client.send_data(json.dumps({'purpose':'game_over', 'final_ranks':self.database.get_final_ranks()}))
+        elif purpose=='close':
+            player_id = data.get('player_id')
+            more_clients = self.database.decrease_player(player_id)
+            if more_clients==0:
+                print(f'Number of clients {more_clients}')
+                exit(1)
+
 
 def make_server(ip, port, n):
     Server(ip, port, n)

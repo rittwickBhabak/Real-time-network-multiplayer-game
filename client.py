@@ -11,22 +11,23 @@ CANVAS_HEIGHT = get_canvas_height()
 CANVAS_WIDTH = get_canvas_width()
 
 class Client():
-    def __init__(self, tcp_server_ip, tcp_server_port, gui, is_slow_network=False):
+    def __init__(self, tcp_server_ip, tcp_server_port, gui, is_slow_network=False, serverIP="", serverPort=""):
         self.points = 0 
         self.tcp_server_ip = tcp_server_ip
         self.tcp_server_port = tcp_server_port
         self.gui = gui 
         self.is_slow_network = is_slow_network
         self.delay = 5
+        self.serverIp = serverIP 
+        self.serverPort = serverPort 
 
-    def square_clicked(self, square_id, clicked_at, amount=5):
-        self.points = self.points + amount
-        self.gui.update_point_canvas(self.points)
-        # print(f'Canvas updated by {self.points}')
-        tcp_client = get_a_tcp_client(self.server_ip, self.server_port)
+    def handle_connections(self, square_id, clicked_at, amount):
 
         if self.is_slow_network:
-            time.sleep(self.delay)
+            tcp_client = get_a_tcp_client(self.server_ip, self.server_port, True)
+        else:
+            tcp_client = get_a_tcp_client(self.server_ip, self.server_port)
+
 
         data = tcp_client.send_and_receive_data(json.dumps({'purpose':'click', 'square_id':square_id, 'player_id':self.player_id, 'clicked_at':str(clicked_at) }))
         data = json.loads(data)
@@ -36,8 +37,19 @@ class Client():
             self.points = self.points - amount 
             self.gui.update_point_canvas(self.points)
 
+    def square_clicked(self, square_id, clicked_at, amount=5):
+        self.points = self.points + amount
+        self.gui.update_point_canvas(self.points)
+        # print(f'Canvas updated by {self.points}')
+        thread = threading.Thread(target=self.handle_connections, args=(square_id,clicked_at,amount))
+        thread.start()
+        
     def show_status(self):
-        tcp_client = get_a_tcp_client(self.server_ip, self.server_port)
+        if self.is_slow_network:
+            tcp_client = get_a_tcp_client(self.server_ip, self.server_port, True)
+        else:
+            tcp_client = get_a_tcp_client(self.server_ip, self.server_port, False)
+
         data = tcp_client.send_and_receive_data(json.dumps({"purpose":"game_over", "player_id":self.player_id}))
         data = json.loads(data)
         purpose = data.get('purpose')
@@ -52,7 +64,7 @@ class Client():
             except:
                 pass 
             self.gui.show_final_status(final_ranks)
-    
+
     def connect_to_server(self, server_ip, server_port, name):
         self.server_ip = server_ip 
         self.server_port = server_port 
@@ -67,9 +79,9 @@ class Client():
         # print(f'First Data from server is {data}')
         self.player_id = data.get('player_id')
         if self.is_slow_network:
-            self.gui.root.title(f'Player {name} (Slow network)')
+            self.gui.root.title(f'Player {name}({self.player_id}) (Slow network)')
         else:
-            self.gui.root.title(f'Player {name} ')
+            self.gui.root.title(f'Player {name}({self.player_id}) ')
         coordinates = data.get('coordinates')
         start_time = data.get('start_time')
         return (start_time, coordinates)
@@ -108,12 +120,16 @@ class Client():
             final_ranks = data.get('final_ranks')
             self.gui.show_final_status(final_ranks)
             
-        
+    def close_client(self):
+        tcp_client = get_a_tcp_client(self.server_ip, self.server_port) 
+        tcp_client.send_and_receive_data(json.dumps({'purpose':'close', 'player_id':self.player_id}))
+        # self.tcp_con_2.close_connection()
 
-def make_client(tcp_server_ip, tcp_server_port, is_slow_network):
+
+def make_client(tcp_server_ip, tcp_server_port, is_slow_network, serverIP, serverPort):
     gui = GUI()
     
-    client = Client(tcp_server_ip, tcp_server_port, gui, is_slow_network)
+    client = Client(tcp_server_ip, tcp_server_port, gui, is_slow_network, serverIP, serverPort)
     gui.set_client(client)   
     gui.show()
 

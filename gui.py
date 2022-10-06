@@ -27,7 +27,7 @@ class GUI():
         self.root.title('Real-time network multiplayer game')
 
         self.draw_blank_canvas()
-        self.make_blank_player_list()
+        # self.make_blank_player_list()
         self.make_form()
         self.blank_my_points()
         
@@ -73,9 +73,6 @@ class GUI():
         self.players_frame = Frame(self.root, relief=GROOVE, borderwidth=2)
         heading = Label(self.players_frame, text='Players')
         self.players_list = Listbox(self.players_frame)
-        # self.players_list.insert(1, "Raju(1)")
-        # self.players_list.insert(2, "Shayam(2)")
-        # self.players_list.insert(3, "BabuRaio(3)")
         self.players_frame.pack(side=RIGHT)
         heading.pack()
         self.players_list.pack()
@@ -86,17 +83,23 @@ class GUI():
         self.points_canvas.pack(anchor=E, side=RIGHT)
 
     def clear_canvas(self, canvas):
-        canvas.delete('all') 
+        try:
+            canvas.delete('all') 
+        except:
+            pass 
 
     def write_on_canvas(self, canvas, text, x, y):
-        canvas.delete('all')
-        canvas.create_text(x, y, text=text)
+        self.clear_canvas(canvas)
+        try:
+            canvas.create_text(x, y, text=text)
+        except:
+            pass 
 
     def square_click_handler(self, event):
         x = event.x
         y = event.y 
-        # print(f'clicked at ({x},{y}) on {datetime.now()}')
-        for square in self.squares:
+        temp = self.squares
+        for square in temp:
             square_id = square.get('id')
             x0 = square.get('x0')
             y0 = square.get('y0')
@@ -104,12 +107,13 @@ class GUI():
             if x0<=x<=x0+SQUARE_SIDE_LENGTH and y0<=y<=y0+SQUARE_SIDE_LENGTH:
                 self.canvas.delete(obj)
                 self.squares.remove(square)
-                # self.square_click_handler(square_id, datetime.now())
+                print(f'Square({square_id}) is clicked on {datetime.now()} by {self.client.player_id}')
                 thread = threading.Thread(target=self.client.square_clicked, args=(square_id, datetime.now()))
                 thread.start()
-                # self.client.square_clicked(square_id, datetime.now()) 
                 if len(self.squares)==0:
-                    self.on_game_end()
+                    print(f'Now there are no more squares')
+                    thread = threading.Thread(target=self.on_game_end)
+                    thread.start()
 
     def on_game_end(self):
         self.clear_canvas(self.canvas)
@@ -119,21 +123,15 @@ class GUI():
     def show_final_status(self, final_ranks):
         self.canvas.destroy()
         self.points_canvas.destroy()
-        self.players_frame.destroy()
+        # self.players_frame.destroy()
         frame = Frame(self.root, relief=GROOVE, borderwidth=2, padx=20, pady=20)
         label1 = Label(frame, text="Game Over", font='times 24 bold')
         label2 = Label(frame, text=f"Your Points {self.client.points}", font='times 24 bold')
         label3 = Label(frame, text="Final Ranks", font='times 24 bold')
-        exit_btn = Button(frame, text='Exit Game', command=quit)
+        exit_btn = Button(frame, text='Exit Game', command=self.close)
 
         listbox = Listbox(frame)
-        # final_ranks = json.loads(final_ranks)
-        # final_ranks = final_ranks.get('final_ranks')
-        try:
-            final_ranks.sort(key=lambda x: x[2], reverse=True)
-        except:
-            print(f'Problem in {self.client.player_id}: {final_ranks}')
-            final_ranks = [[1, "Ram", 25], [2, "Baburaio", 15], [3, "Shayam", 10]]
+        final_ranks.sort(key=lambda x: x[2], reverse=True)
         for index, player in enumerate(final_ranks):
             listbox.insert(index+1, f"{player[1]}({player[2]})")
         frame.pack(side=TOP, fill=X)
@@ -142,6 +140,10 @@ class GUI():
         label3.pack()
         listbox.pack()
         exit_btn.pack()
+
+    def close(self):
+        self.client.close_client()
+        quit()
 
     def update_point_canvas(self, new_point):
         self.clear_canvas(self.points_canvas)
@@ -186,4 +188,7 @@ class GUI():
 
     def set_client(self, client):
         self.client = client 
+        print(client.serverIp, client.serverPort)
+        self.ip_value.set(client.serverIp)
+        self.port_value.set(client.serverPort)  
 

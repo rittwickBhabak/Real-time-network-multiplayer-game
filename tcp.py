@@ -1,4 +1,5 @@
 from socket import *
+import time
 
 class TCPServer():
     def __init__(self, ip, port, callback):
@@ -21,18 +22,28 @@ class TCPServer():
             connectionSocket.close()
 
 class TCPClient():
-    def __init__(self, serverIP, serverPort):
+    def __init__(self, serverIP, serverPort, is_slow=False):
         self.serverIP = serverIP
         self.serverPort = serverPort
-        self.bufferSize = 1024
+        self.delay = 5 
+        self.is_slow = is_slow 
+        
+        if is_slow:
+            self.bufferSize = 1024*1024
+        else:
+            self.bufferSize = 1024
         self.TCPClientSocket = socket(AF_INET, SOCK_STREAM)
-        print(self.serverPort)
-        print(type(self.serverPort))
+        # print(self.serverPort)
+        # print(type(self.serverPort))
         self.TCPClientSocket.connect((self.serverIP,int(self.serverPort)))
 
     def send_and_receive_data(self, data):
+        if self.is_slow:
+            time.sleep(self.delay)
         self.TCPClientSocket.send(data.encode())
         server_message = self.TCPClientSocket.recv(self.bufferSize)
+        if self.is_slow:
+            time.sleep(self.delay)
         return server_message.decode()
     
     def send_data(self, data):
@@ -41,6 +52,6 @@ class TCPClient():
     def close_connection(self):
         self.TCPClientSocket.close()
 
-def get_a_tcp_client(ip, port):
+def get_a_tcp_client(ip, port, is_slow=False):
     # print(f'A tcp client for server({ip}:{port}) is created.')
-    return TCPClient(ip, port)
+    return TCPClient(ip, port, is_slow)

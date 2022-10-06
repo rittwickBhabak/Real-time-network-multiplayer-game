@@ -78,5 +78,14 @@ class Database():
         
         return final_ranks
 
+    def decrease_player(self, player_id):
+        old = {'id':player_id}
+        new_doc = {"$set":{'closed':True}}
+        self.players_col.update_one(old,new_doc)
+
+        count1 = self.players_col.count_documents({'closed':True})
+        count2 = self.players_col.count_documents({})
+        return count2-count1 
+
 
         # new_doc = {"$set": {'clicked_by':player_id, 'clicked_at':clicked_at}}
