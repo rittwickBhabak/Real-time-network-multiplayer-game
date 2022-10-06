@@ -53,7 +53,7 @@ class Server():
     def __init__(self, ip, port, n=10):
         self.count = 0
         self.database = Database()
-        self.start_time = datetime.datetime.now() + datetime.timedelta(seconds=10)
+        self.start_time = datetime.datetime.now() + datetime.timedelta(seconds=20)
         self.coordinates = generate_points(CANVAS_WIDTH, CANVAS_HEIGHT, SQUARE_SIDE_LENGTH, n=n)
         self.database.insert_points(self.coordinates)
         self.tcp_conn_1 = TCPServer(ip, port, self.callback)

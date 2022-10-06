@@ -163,16 +163,22 @@ class GUI():
         (game_starts_at, coordinates) = self.client.connect_to_server(ip, port, name)
 
         self.coordinates = coordinates
-        self.game_starts_at = game_starts_at
+        self.game_starts_at = datetime.strptime(game_starts_at, '%Y-%m-%d %H:%M:%S.%f')
 
         self.form_frame.destroy() 
 
-        self.draw_squares()
+        thread = threading.Thread(target=self.draw_squares)
+        thread.start()
+        # self.draw_squares()
 
     def draw_squares(self):
         self.clear_canvas(self.canvas)
         # colors = ['red', 'green', 'blue', 'pink', 'yellow', 'black', 'maroon', 'purple', 'cyan', 'magenta']
         self.squares = []
+        # print(type(self.game_starts_at))
+        # print(type(datetime.now()))
+        while datetime.now()<self.game_starts_at:
+            continue 
         for coordinate in self.coordinates:
             square_id = coordinate.get('id')
             x0 = coordinate.get('x0')
