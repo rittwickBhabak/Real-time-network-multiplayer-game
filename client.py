@@ -3,7 +3,7 @@ import time
 from tkinter import *
 import threading
 
-from gui import CANVAS_HEIGHT, CANVAS_WIDTH, GUI 
+from gui import GUI 
 from tcp import get_a_tcp_client, TCPServer 
 from measurements import get_canvas_height, get_canvas_width 
 
@@ -54,7 +54,7 @@ class Client():
         data = json.loads(data)
         purpose = data.get('purpose')
         if purpose=='wait':
-            self.gui.write_on_canvas(self.gui.canvas, 'Your game is over but wait for other players', CANVAS_WIDTH/2, CANVAS_HEIGHT/2)
+            self.gui.write_on_canvas(self.gui.canvas, 'Your game is over but wait for other players', get_canvas_width()/2, get_canvas_height()/2)
         else:
             final_ranks = data.get('final_ranks')
 
