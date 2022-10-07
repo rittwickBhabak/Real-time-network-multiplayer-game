@@ -44,10 +44,12 @@ class TCPClient():
         server_message = self.TCPClientSocket.recv(self.bufferSize)
         if self.is_slow:
             time.sleep(self.delay)
+        self.close_connection()
         return server_message.decode()
     
     def send_data(self, data):
         self.TCPClientSocket.send(data.encode())
+        self.close_connection()
 
     def close_connection(self):
         self.TCPClientSocket.close()
