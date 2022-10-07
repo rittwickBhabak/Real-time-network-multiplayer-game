@@ -16,10 +16,11 @@ class TCPServer():
     def up(self):
         while True:
             connectionSocket, addr = self.TCPServerSocket.accept()
+            # while True:
             message = connectionSocket.recv(self.bufferSize).decode()
             # print(f'A message: {message} has come from {addr}')
             self.callback(connectionSocket, message)
-            connectionSocket.close()
+            # connectionSocket.close()
 
 class TCPClient():
     def __init__(self, serverIP, serverPort, is_slow=False):
@@ -44,6 +45,7 @@ class TCPClient():
         server_message = self.TCPClientSocket.recv(self.bufferSize)
         if self.is_slow:
             time.sleep(self.delay)
+        self.TCPClientSocket.close()
         return server_message.decode()
     
     def send_data(self, data):

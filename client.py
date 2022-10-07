@@ -125,7 +125,6 @@ class Client():
         tcp_client.send_and_receive_data(json.dumps({'purpose':'close', 'player_id':self.player_id}))
         # self.tcp_con_2.close_connection()
 
-
 def make_client(tcp_server_ip, tcp_server_port, is_slow_network, serverIP, serverPort):
     gui = GUI()
     
