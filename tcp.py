@@ -18,7 +18,7 @@ class TCPServer():
             connectionSocket, addr = self.TCPServerSocket.accept()
             # while True:
             message = connectionSocket.recv(self.bufferSize).decode()
-            # print(f'A message: {message} has come from {addr}')
+            print(f'A message: {message} has come from {addr}')
             self.callback(connectionSocket, message)
             # connectionSocket.close()
 
