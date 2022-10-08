@@ -23,13 +23,10 @@ class Client():
 
     def handle_connections(self, square_id, clicked_at, amount):
 
-        if self.is_slow_network:
-            tcp_client = get_a_tcp_client(self.server_ip, self.server_port, True)
-        else:
-            tcp_client = get_a_tcp_client(self.server_ip, self.server_port)
-
-
+        tcp_client = get_a_tcp_client(self.server_ip, self.server_port, self.is_slow_network)
+        print(f'About to send data to server...')
         data = tcp_client.send_and_receive_data(json.dumps({'purpose':'click', 'square_id':square_id, 'player_id':self.player_id, 'clicked_at':str(clicked_at) }))
+        print(f'Data is send to server and received message from server....')
         data = json.loads(data)
         clicked_by = data.get('player_id')
         # print(data)

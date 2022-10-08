@@ -20,7 +20,7 @@ class TCPServer():
             message = connectionSocket.recv(self.bufferSize).decode()
             print(f'A message: {message} has come from {addr}')
             self.callback(connectionSocket, message)
-            # connectionSocket.close()
+            connectionSocket.close()
 
 class TCPClient():
     def __init__(self, serverIP, serverPort, is_slow=False):
@@ -54,6 +54,7 @@ class TCPClient():
 
     def close_connection(self):
         self.TCPClientSocket.close()
+        print(f'A tcp client is destroyed.')
 
 def get_a_tcp_client(ip, port, is_slow=False):
     print(f'A tcp client for server({ip}:{port}) is created.')
