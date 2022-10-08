@@ -29,10 +29,8 @@ class TCPClient():
         self.delay = 5 
         self.is_slow = is_slow 
         
-        if is_slow:
-            self.bufferSize = 1024*1024
-        else:
-            self.bufferSize = 1024
+
+        self.bufferSize = 1024
         self.TCPClientSocket = socket(AF_INET, SOCK_STREAM)
         # print(self.serverPort)
         # print(type(self.serverPort))
@@ -41,8 +39,10 @@ class TCPClient():
     def send_and_receive_data(self, data):
         if self.is_slow:
             time.sleep(self.delay)
+        print(f'Sending data to {self.serverIP}:{self.serverPort}: {data}')
         self.TCPClientSocket.send(data.encode())
         server_message = self.TCPClientSocket.recv(self.bufferSize)
+        print(f'Message received from server: {server_message}')
         if self.is_slow:
             time.sleep(self.delay)
         self.close_connection()
@@ -56,5 +56,5 @@ class TCPClient():
         self.TCPClientSocket.close()
 
 def get_a_tcp_client(ip, port, is_slow=False):
-    # print(f'A tcp client for server({ip}:{port}) is created.')
+    print(f'A tcp client for server({ip}:{port}) is created.')
     return TCPClient(ip, port, is_slow)
