@@ -1,4 +1,5 @@
 from socket import *
+import threading
 import time
 
 class TCPServer():
@@ -13,14 +14,19 @@ class TCPServer():
 
         # print(f'TCP Server is up at {self.ip}:{self.port}')
     
-    def up(self):
+    def manage_connection(self, connectionSocket, addr):
         while True:
-            connectionSocket, addr = self.TCPServerSocket.accept()
-            # while True:
             message = connectionSocket.recv(self.bufferSize).decode()
             print(f'A message: {message} has come from {addr}')
             self.callback(connectionSocket, message)
-            connectionSocket.close()
+            # connectionSocket.close()  
+
+    def up(self):
+        while True:
+            connectionSocket, addr = self.TCPServerSocket.accept()
+            thread = threading.Thread(target=self.manage_connection, args=(connectionSocket, addr))
+            thread.start()
+            
 
 class TCPClient():
     def __init__(self, serverIP, serverPort, is_slow=False):
@@ -28,11 +34,7 @@ class TCPClient():
         self.serverPort = serverPort
         self.delay = 5 
         self.is_slow = is_slow 
-        
-        if is_slow:
-            self.bufferSize = 1024*1024
-        else:
-            self.bufferSize = 1024
+        self.bufferSize = 1024
         self.TCPClientSocket = socket(AF_INET, SOCK_STREAM)
         # print(self.serverPort)
         # print(type(self.serverPort))
@@ -45,12 +47,12 @@ class TCPClient():
         server_message = self.TCPClientSocket.recv(self.bufferSize)
         if self.is_slow:
             time.sleep(self.delay)
-        self.close_connection()
+        # self.close_connection()
         return server_message.decode()
     
     def send_data(self, data):
         self.TCPClientSocket.send(data.encode())
-        self.close_connection()
+        # self.close_connection()
 
     def close_connection(self):
         self.TCPClientSocket.close()
