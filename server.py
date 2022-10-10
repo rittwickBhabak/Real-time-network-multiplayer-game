@@ -1,11 +1,11 @@
 import datetime
 import json
+from socket import *
 import threading
 import random 
 
-from tcp import TCPServer, get_a_tcp_client 
-from measurements import get_canvas_width, get_canvas_height, get_square_side_length
-from database import Database
+from database import Database 
+from measurements import *
 
 CANVAS_WIDTH = get_canvas_width()
 CANVAS_HEIGHT = get_canvas_height()
@@ -50,85 +50,113 @@ def generate_points(width, height, side_len, n=100):
 
 
 class Server():
-    def __init__(self, ip, port, n=10):
-        self.count = 0
+    def __init__(self, ip, port, number_of_points=5, start_match_after=10):
+        self.ip = ip 
+        self.port = port 
+        self.buffer_size = 1024
+        self.tcp_socket = socket(AF_INET, SOCK_STREAM)
+        self.tcp_socket.bind((self.ip, self.port))
+        self.tcp_socket.listen(100)
+        print(f'Server address {self.ip}:{self.port}')
+        self.up_tcp_server()
+        self.clients = [] 
         self.database = Database()
-        self.start_time = datetime.datetime.now() + datetime.timedelta(seconds=20)
-        self.coordinates = generate_points(CANVAS_WIDTH, CANVAS_HEIGHT, SQUARE_SIDE_LENGTH, n=n)
+        self.game_starts_at = datetime.datetime.now() + datetime.timedelta(seconds=start_match_after)
+        self.coordinates = generate_points(CANVAS_WIDTH, CANVAS_HEIGHT, SQUARE_SIDE_LENGTH, number_of_points)
         self.database.insert_points(self.coordinates)
-        self.tcp_conn_1 = TCPServer(ip, port, self.callback)
-        print(f'Server address {ip}:{port}')
-        self.client_tcp_conns = []
-        thread = threading.Thread(target=self.tcp_conn_1.up)
+
+    def up_tcp_server(self):
+        thread = threading.Thread(target=self.tcp_server)
         thread.start()
+    
+    def tcp_server(self):
+        while True:
+            connection_socket, addr = self.tcp_socket.accept()
+            thread = threading.Thread(target=self.tcp_connection, args=(connection_socket, addr))
+            thread.start()
+    
+    def tcp_connection(self, connection_socket, addr):
+        while True:
+            data = connection_socket.recv(self.buffer_size).decode()
+            data = json.loads(data) 
+            purpose = data.get('purpose')
+            print(f'The purpose of the data is {purpose}')
 
-    def register(self, ip, port, name):
-        self.count = self.count + 1
-        # tcp_conn = TCPClient(ip, port)
-        # self.client_tcp_conns.append({'id':self.count, '_id':self.count, 'tcp_conn':tcp_conn})
-        self.database.insert_player({'id':self.count, 'name':name, 'points':0, 'addr':(ip,port)})
-        print(f'Player {name} joined server...')
-        return self.count 
-        
-    def callback(self, connectionSocket, data):
-        # print(f"Data: {data}")
-        data = json.loads(data)
-        purpose = data.get('purpose')
-        if purpose=='join':
-            name = data.get('name')
-            ip = data.get('ip')
-            port = data.get('port')
-            port = int(port)
-            # print(f'Server got a join request from {ip}:{port}')
+            # {'purpose':'join-req', 'name':self.name, 'client-tcp-ip':self.ip, 'client-tcp-port':self.port}
+            # {'client-id', 'coordinates', 'game-starts-at'}
+            if purpose=='join-req':
+                client_id = len(self.clients) + 1 
+                name = data.get('name')
+                client_tcp_ip = data.get('client-tcp-ip')
+                client_tcp_port = data.get('client-tcp-port')
+                client_tcp_socket = socket(AF_INET, SOCK_STREAM)
+                client_tcp_socket.connect((client_tcp_ip, client_tcp_port))
+                client_obj = {'id':client_id, 'name':name, 'client-tcp-socket':client_tcp_socket}
+                self.clients.append(client_obj)
+                self.database.insert_player({'id':client_id, 'name':name, 'points':0})
 
-            message = {'player_id': self.register(ip, port, name), 'coordinates':self.coordinates, 'start_time':str(self.start_time)}
-            # print(f"Before suspect:{message}")
-            message = json.dumps(message)
-            connectionSocket.send(message.encode())
-        elif purpose=='click':
-            square_id = data.get('square_id')
-            player_id = data.get('player_id')
-            clicked_at = data.get('clicked_at')
+                response_obj = {'client-id':client_id, 'coordinates':self.coordinates, 'game-starts-at':str(self.game_starts_at)}
+                response_obj = json.dumps(response_obj)
+                connection_socket.send(response_obj.encode())
 
-            (current_clicker, actual_clicker) = self.database.find_square_id(square_id, player_id, clicked_at)
-            message = {'player_id':actual_clicker}
-            message = json.dumps(message)
-            connectionSocket.send(message.encode())
-            
-            allPlayers = self.database.get_players()
-            for player in allPlayers:
-                addr = tuple(player.get('addr'))
-                tcp_client = get_a_tcp_client(addr[0], addr[1])
-                # print(f'A request is made to {addr}')
-                tcp_client.send_data(json.dumps({'purpose':'del_square', 'square_id':square_id}))
-        elif purpose=='game_over':
-            player_id = data.get('player_id')
-            flag = self.database.game_over_request(player_id)
-            # print(f'game over request came form {player_id}')
-            if flag==False:
-                connectionSocket.send(json.dumps({'purpose':'wait'}).encode())
-            else:
-                connectionSocket.send(json.dumps({'purpose':'game_over', 'final_ranks':self.database.get_final_ranks()}).encode())
-                allPlayers = self.database.get_players()
-                for player in allPlayers:
-                    addr = tuple(player.get('addr'))
-                    p_id = player.get('id')
-                    if player_id!=p_id:
-                        tcp_client = get_a_tcp_client(addr[0], addr[1])
-                        tcp_client.send_data(json.dumps({'purpose':'game_over', 'final_ranks':self.database.get_final_ranks()}))
-        elif purpose=='close':
-            player_id = data.get('player_id')
-            more_clients = self.database.decrease_player(player_id)
-            if more_clients==0:
-                print(f'Number of clients {more_clients}')
-                exit(1)
+            # {'purpose': 'square-click', 'square-id': square_id, 'clicked-at':clicked_at, 'clicked-by':client_id}
+            # {'actually-clicked-by'}
+            elif purpose=='square-click':
+                square_id = data.get('square-id')
+                clicked_at = data.get('clicked-at')
+                clicked_by = data.get('clicked-by')
 
+                (previously_clicked_by, actually_clicked_by) = self.database.find_square_id(square_id, clicked_by, clicked_at)
+                response_obj = {'actually-clicked-by':actually_clicked_by}
+                response_obj = json.dumps(response_obj)
+                connection_socket.send(response_obj.encode())
 
-def make_server(ip, port, n):
-    Server(ip, port, n)
+                if previously_clicked_by!=actually_clicked_by :
+                    print(f'square({square_id}) was previously clicked by {previously_clicked_by}')
+                    for c in self.clients:
+                        if c.get('id')==previously_clicked_by:
+                            message = {'purpose':'update-points'}
+                            message = json.dumps(message)
+                            c.get('client-tcp-socket').send(message.encode())
+
+                # broadcast the message 
+                broadcast_message = {'purpose':'delete-square', 'square-id':square_id}
+                broadcast_message = json.dumps(broadcast_message)
+                for c in self.clients:
+                    c_id = c.get('id')
+                    if client_id!=c_id:
+                        c_tcp_socket = c.get('client-tcp-socket')
+                        c_tcp_socket.send(broadcast_message.encode())
+
+            # {'purpose': 'gave-over', 'client-id':client_id}
+            elif purpose=='game-over':
+                client_id = data.get('client-id')
+                flag = self.database.game_over_request(client_id)
+                if flag==False:
+                    connection_socket.send(json.dumps({'purpose':'wait'}).encode())
+                else:
+                    final_ranks = self.database.get_final_ranks()
+                    broadcast_message = {'purpose':'game-over', 'final-ranks':final_ranks}
+                    broadcast_message = json.dumps(broadcast_message)
+                    connection_socket.send(broadcast_message.encode())
+
+                    for c in self.clients:
+                        c_id = c.get('id')
+                        if client_id!=c_id:
+                            c.get('client-tcp-socket').send(broadcast_message.encode())
+
+                
+            # {'purpose': 'dis-connecting', 'client-id':client_id}
+            # elif purpose=='dis-connecting':
+            #     client_id = data.get('client-id')
+            #     connection_socket.send(json.dumps({'purpose':'quit'}).encode())
+            #     for c in self.clients:
+            #         if c.get('id')==client_id:
+            #             c.get('client-tcp-socket').close()
+            #             more_clients = self.database.decrease_player(client_id)
+            #             if more_clients==0:
+            #                 print(f'Number of clients {more_clients}')
+            #                 # exit(1)
 
 if __name__=='__main__':
-    ip = input('Enter ip address for server: ')
-    port = int(input('Enter port number for server: '))
-    n = int(input('Enter number of points on the screen: '))
-    server = Server(ip, port, n)
+    server = Server(gethostbyname(gethostname()), 20000, number_of_points=2, start_match_after=10)
