@@ -6,6 +6,22 @@ import pymongo
 
 class Database():
     """This is the database class consisting of the read and write operations to the database.
+
+    Attributes:
+        client: mongodb client
+        db : the database object
+        square_col: squares collection
+        players_col: players collection 
+
+    Methods:
+        insert_points: inserts points to the database
+        insert_player: inserts a single player to the database
+        find_square_id: finds a square and the current and actual clicker of the square
+        game_over_request: updates a player, that the players game is over
+        get_players: returns the list of all players
+        get_final_ranks: returns the list of all players along with their ranks
+        decrease_player: updates the player that the player has disconnected from server.
+        
     """
 
     def __init__(self, URI='mongodb://localhost:27017'):

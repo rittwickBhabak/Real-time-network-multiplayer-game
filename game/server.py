@@ -14,16 +14,25 @@ CANVAS_HEIGHT = get_canvas_height()
 SQUARE_SIDE_LENGTH = get_square_side_length()
 
 def generate_points(width, height, side_len, n=100):
-    """Generate random , non-overlapping n points on the canvas.
+    """This is the server of the application. This acts as an central authority.
 
-    Args:
-        width (int): Width of the canvas
-        height (int): Height of the canvas
-        side_len (int): side length of a square
-        n (int, optional): Number of points on the canvas initially. Defaults to 100.
+    Attributes:
+        ip (str):
+        port (int):
+        buffer_size (int):
+        tcp_socket (socket.socket):
+        up_tcp_server (socket.socket):
+        clients (list):
+        database :
+        game_starts_at (datetime.datetime):
+        coordinates (list):
+    
+    Methods:
+        up_tcp_server : starts tcp server 
+        tcp_server: starts tcp server at a different thread
+        tcp_connection: creates a tcp connection
+        up_server: Starts the whole server object
 
-    Returns:
-        (list): The list of top-left points of squares along with the ids
     """
 
     count = 0
