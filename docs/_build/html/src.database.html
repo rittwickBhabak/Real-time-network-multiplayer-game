@@ -1,0 +1,315 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>src.database package &#8212; Multiplayer Game  documentation</title>
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/language_data.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="src.server package" href="src.server.html" />
+    <link rel="prev" title="src.client package" href="src.client.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="src-database-package">
+<h1>src.database package<a class="headerlink" href="#src-database-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-src.database.database">
+<span id="src-database-database-module"></span><h2>src.database.database module<a class="headerlink" href="#module-src.database.database" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="database">
+<h3>Database<a class="headerlink" href="#database" title="Permalink to this headline">¶</a></h3>
+<p>This module consists of the functions related to data read and write.</p>
+<dl class="class">
+<dt id="src.database.database.Database">
+<em class="property">class </em><code class="descclassname">src.database.database.</code><code class="descname">Database</code><span class="sig-paren">(</span><em>URI='mongodb://localhost:27017'</em><span class="sig-paren">)</span><a class="headerlink" href="#src.database.database.Database" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>This is the database class consisting of the read and write operations to the database.</p>
+<dl class="attribute">
+<dt id="src.database.database.Database.client">
+<code class="descname">client</code><a class="headerlink" href="#src.database.database.Database.client" title="Permalink to this definition">¶</a></dt>
+<dd><p>mongodb client</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="src.database.database.Database.db">
+<code class="descname">db</code><a class="headerlink" href="#src.database.database.Database.db" title="Permalink to this definition">¶</a></dt>
+<dd><p>the database object</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="src.database.database.Database.square_col">
+<code class="descname">square_col</code><a class="headerlink" href="#src.database.database.Database.square_col" title="Permalink to this definition">¶</a></dt>
+<dd><p>squares collection</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="src.database.database.Database.players_col">
+<code class="descname">players_col</code><a class="headerlink" href="#src.database.database.Database.players_col" title="Permalink to this definition">¶</a></dt>
+<dd><p>players collection</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="src.database.database.Database.insert_points">
+<code class="descname">insert_points</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#src.database.database.Database.insert_points" title="Permalink to this definition">¶</a></dt>
+<dd><p>inserts points to the database</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="src.database.database.Database.insert_player">
+<code class="descname">insert_player</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#src.database.database.Database.insert_player" title="Permalink to this definition">¶</a></dt>
+<dd><p>inserts a single player to the database</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="src.database.database.Database.find_square_id">
+<code class="descname">find_square_id</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#src.database.database.Database.find_square_id" title="Permalink to this definition">¶</a></dt>
+<dd><p>finds a square and the current and actual clicker of the square</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="src.database.database.Database.game_over_request">
+<code class="descname">game_over_request</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#src.database.database.Database.game_over_request" title="Permalink to this definition">¶</a></dt>
+<dd><p>updates a player, that the players game is over</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="src.database.database.Database.get_players">
+<code class="descname">get_players</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#src.database.database.Database.get_players" title="Permalink to this definition">¶</a></dt>
+<dd><p>returns the list of all players</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="src.database.database.Database.get_final_ranks">
+<code class="descname">get_final_ranks</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#src.database.database.Database.get_final_ranks" title="Permalink to this definition">¶</a></dt>
+<dd><p>returns the list of all players along with their ranks</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="src.database.database.Database.decrease_player">
+<code class="descname">decrease_player</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#src.database.database.Database.decrease_player" title="Permalink to this definition">¶</a></dt>
+<dd><p>updates the player that the player has disconnected from server.</p>
+</dd></dl>
+
+<dl class="method">
+<dt>
+<code class="descname">decrease_player</code><span class="sig-paren">(</span><em>player_id</em><span class="sig-paren">)</span></dt>
+<dd><p>When a player disconnects from the server, server keeps a updates the player row such that the player is disconnected.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>player_id</strong> (<em>int</em>) – id of the dis-connecting player</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">how many players are still connected to the server</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">int</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt>
+<code class="descname">find_square_id</code><span class="sig-paren">(</span><em>square_id</em>, <em>player_id</em>, <em>clicked_at</em><span class="sig-paren">)</span></dt>
+<dd><p>Find a square with the given id and whether it is clicked previously.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>square_id</strong> (<em>int</em>) – id the of the square</li>
+<li><strong>player_id</strong> (<em>int</em>) – id of the player who currently has clicked the square.</li>
+<li><strong>clicked_at</strong> (<em>datetime.datetime</em>) – timestamp when the player has clicked on the square.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">id of the player who has previously clicked on the square and id of the player who is actual owner of the square points as of now.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">tuple</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt>
+<code class="descname">game_over_request</code><span class="sig-paren">(</span><em>player_id</em><span class="sig-paren">)</span></dt>
+<dd><p>Updates a player row when that player’s game is over.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>player_id</strong> (<em>int</em>) – id of the player</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">whether all of the players game is over or not</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">bool</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt>
+<code class="descname">get_final_ranks</code><span class="sig-paren">(</span><span class="sig-paren">)</span></dt>
+<dd><p>Returns list of all players</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">list of all players</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">list</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt>
+<code class="descname">get_players</code><span class="sig-paren">(</span><span class="sig-paren">)</span></dt>
+<dd><p>Returns list of all players</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">list of all players</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">mongodb doc list</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt>
+<code class="descname">insert_player</code><span class="sig-paren">(</span><em>player</em><span class="sig-paren">)</span></dt>
+<dd><p>Insert a single player to the database.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>player</strong> (<em>dictionary</em>) – {‘id’:int,’name’:str,’points’:0}</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt>
+<code class="descname">insert_points</code><span class="sig-paren">(</span><em>squares</em><span class="sig-paren">)</span></dt>
+<dd><p>Insert all of the coordinates of the squares.
+Each time before inserting all of the points the database clears its previous records.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>squares</strong> (<em>dictionary</em>) – {‘id’:int,’x0’:int,’y0’:int}</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+<div class="section" id="module-src.database">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-src.database" title="Permalink to this headline">¶</a></h2>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">Multiplayer Game</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">src</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="src.html">src package</a></li>
+</ul>
+</li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+  <li><a href="modules.html">src</a><ul>
+  <li><a href="src.html">src package</a><ul>
+      <li>Previous: <a href="src.client.html" title="previous chapter">src.client package</a></li>
+      <li>Next: <a href="src.server.html" title="next chapter">src.server package</a></li>
+  </ul></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2022, Rittwick.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.8.5</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.8</a>
+      
+      |
+      <a href="_sources/src.database.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

@@ -1,0 +1,650 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>src.client package &#8212; Multiplayer Game  documentation</title>
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/language_data.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="src.database package" href="src.database.html" />
+    <link rel="prev" title="src package" href="src.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="src-client-package">
+<h1>src.client package<a class="headerlink" href="#src-client-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-src.client.client">
+<span id="src-client-client-module"></span><h2>src.client.client module<a class="headerlink" href="#module-src.client.client" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="client">
+<h3>Client<a class="headerlink" href="#client" title="Permalink to this headline">¶</a></h3>
+<p>This module contains all the code related to client side.</p>
+<dl class="class">
+<dt id="src.client.client.Client">
+<em class="property">class </em><code class="descclassname">src.client.client.</code><code class="descname">Client</code><span class="sig-paren">(</span><em>ip</em>, <em>port=30000</em>, <em>server_ip=''</em>, <em>server_port=0</em>, <em>name=''</em>, <em>is_slow=False</em>, <em>delay=5</em><span class="sig-paren">)</span><a class="headerlink" href="#src.client.client.Client" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Client side of the application.</p>
+<dl class="attribute">
+<dt id="src.client.client.Client.ip">
+<code class="descname">ip</code><a class="headerlink" href="#src.client.client.Client.ip" title="Permalink to this definition">¶</a></dt>
+<dd><p>ip address of client</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body">str</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="src.client.client.Client.port">
+<code class="descname">port</code><a class="headerlink" href="#src.client.client.Client.port" title="Permalink to this definition">¶</a></dt>
+<dd><p>port of client</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body">int</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="src.client.client.Client.buffer_size">
+<code class="descname">buffer_size</code><a class="headerlink" href="#src.client.client.Client.buffer_size" title="Permalink to this definition">¶</a></dt>
+<dd><p>buffer size of the client tcp connection.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body">int</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="src.client.client.Client.tcp_socket">
+<code class="descname">tcp_socket</code><a class="headerlink" href="#src.client.client.Client.tcp_socket" title="Permalink to this definition">¶</a></dt>
+<dd><p>tcp socket to talk with the server</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body">socket.socket</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="src.client.client.Client.server_ip">
+<code class="descname">server_ip</code><a class="headerlink" href="#src.client.client.Client.server_ip" title="Permalink to this definition">¶</a></dt>
+<dd><p>ip address of the server</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body">str</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="src.client.client.Client.server_port">
+<code class="descname">server_port</code><a class="headerlink" href="#src.client.client.Client.server_port" title="Permalink to this definition">¶</a></dt>
+<dd><p>port number of the server’s tcp server.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body">int</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="src.client.client.Client.name">
+<code class="descname">name</code><a class="headerlink" href="#src.client.client.Client.name" title="Permalink to this definition">¶</a></dt>
+<dd><p>name of the client.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body">str</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="src.client.client.Client.points">
+<code class="descname">points</code><a class="headerlink" href="#src.client.client.Client.points" title="Permalink to this definition">¶</a></dt>
+<dd><p>score of the client.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body">int</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="src.client.client.Client.is_slow">
+<code class="descname">is_slow</code><a class="headerlink" href="#src.client.client.Client.is_slow" title="Permalink to this definition">¶</a></dt>
+<dd><p>denotes whether the client is in slow network or not.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body">bool</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="src.client.client.Client.delay">
+<code class="descname">delay</code><a class="headerlink" href="#src.client.client.Client.delay" title="Permalink to this definition">¶</a></dt>
+<dd><p>sends or receive the data after delay amount of time if the client is in a slow network.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body">int</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="src.client.client.Client.root">
+<code class="descname">root</code><a class="headerlink" href="#src.client.client.Client.root" title="Permalink to this definition">¶</a></dt>
+<dd><p>main window of the client.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body">tk.Root</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="src.client.client.Client.up_tcp_server">
+<code class="descname">up_tcp_server</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#src.client.client.Client.up_tcp_server" title="Permalink to this definition">¶</a></dt>
+<dd><p>Starts the tcp server of the client side of the application in a different thread.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="src.client.client.Client.tcp_server">
+<code class="descname">tcp_server</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#src.client.client.Client.tcp_server" title="Permalink to this definition">¶</a></dt>
+<dd><p>TCP server of the client side.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="src.client.client.Client.do_delay">
+<code class="descname">do_delay</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#src.client.client.Client.do_delay" title="Permalink to this definition">¶</a></dt>
+<dd><p>Processes the data after delay amount of time if the client is in slow network.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="src.client.client.Client.tcp_connection">
+<code class="descname">tcp_connection</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#src.client.client.Client.tcp_connection" title="Permalink to this definition">¶</a></dt>
+<dd><p>TCP Connection of the client side.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="src.client.client.Client.send_and_receive_data">
+<code class="descname">send_and_receive_data</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#src.client.client.Client.send_and_receive_data" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sends data to server and received the response from the server.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="src.client.client.Client.make_form">
+<code class="descname">make_form</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#src.client.client.Client.make_form" title="Permalink to this definition">¶</a></dt>
+<dd><p>Makes a blank form for the user to input the server address.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="src.client.client.Client.draw_blank_canvas">
+<code class="descname">draw_blank_canvas</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#src.client.client.Client.draw_blank_canvas" title="Permalink to this definition">¶</a></dt>
+<dd><p>Draws a blank canvas where the points will be in future to be clicked.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="src.client.client.Client.blank_my_points">
+<code class="descname">blank_my_points</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#src.client.client.Client.blank_my_points" title="Permalink to this definition">¶</a></dt>
+<dd><p>Draws a blank canvas where the points of a client will be shown.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="src.client.client.Client.clear_canvas">
+<code class="descname">clear_canvas</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#src.client.client.Client.clear_canvas" title="Permalink to this definition">¶</a></dt>
+<dd><p>Clear a canvas object</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="src.client.client.Client.write_on_canvas">
+<code class="descname">write_on_canvas</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#src.client.client.Client.write_on_canvas" title="Permalink to this definition">¶</a></dt>
+<dd><p>Writes text on the (x,y) position of the canvas</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="src.client.client.Client.join_click_handler">
+<code class="descname">join_click_handler</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#src.client.client.Client.join_click_handler" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method is ran after the join button is clicked.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="src.client.client.Client.draw_squares">
+<code class="descname">draw_squares</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#src.client.client.Client.draw_squares" title="Permalink to this definition">¶</a></dt>
+<dd><p>Draws squares on the main canvas of the board.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="src.client.client.Client.show">
+<code class="descname">show</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#src.client.client.Client.show" title="Permalink to this definition">¶</a></dt>
+<dd><p>Shows the screen.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="src.client.client.Client.update_point_canvas">
+<code class="descname">update_point_canvas</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#src.client.client.Client.update_point_canvas" title="Permalink to this definition">¶</a></dt>
+<dd><p>Updates point-canvas and shows the score to client.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="src.client.client.Client.square_click_handler">
+<code class="descname">square_click_handler</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#src.client.client.Client.square_click_handler" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method is invoked when user clicks on a square.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="src.client.client.Client.on_game_end">
+<code class="descname">on_game_end</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#src.client.client.Client.on_game_end" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method is invoked when there is no more squares on the screen.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="src.client.client.Client.handle_connections">
+<code class="descname">handle_connections</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#src.client.client.Client.handle_connections" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method is invoked on square is clicked.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="src.client.client.Client.square_clicked">
+<code class="descname">square_clicked</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#src.client.client.Client.square_clicked" title="Permalink to this definition">¶</a></dt>
+<dd><p>This square is clicked when the square is clicked.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="src.client.client.Client.show_status">
+<code class="descname">show_status</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#src.client.client.Client.show_status" title="Permalink to this definition">¶</a></dt>
+<dd><p>After the game over, server’s data broadcast is handled by this method.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="src.client.client.Client.show_final_status">
+<code class="descname">show_final_status</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#src.client.client.Client.show_final_status" title="Permalink to this definition">¶</a></dt>
+<dd><p>Shows the final ranks of all of the players after the game is over.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="src.client.client.Client.close">
+<code class="descname">close</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#src.client.client.Client.close" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method is invoked just before the client closes the window.</p>
+</dd></dl>
+
+<dl class="method">
+<dt>
+<code class="descname">blank_my_points</code><span class="sig-paren">(</span><span class="sig-paren">)</span></dt>
+<dd><p>Draws a blank canvas where the points of a client will be shown.</p>
+</dd></dl>
+
+<dl class="method">
+<dt>
+<code class="descname">clear_canvas</code><span class="sig-paren">(</span><em>canvas</em><span class="sig-paren">)</span></dt>
+<dd><p>Clear a canvas object</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>canvas</strong> (<em>tkinter.Canvas</em>) – An canvas object</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt>
+<code class="descname">close</code><span class="sig-paren">(</span><span class="sig-paren">)</span></dt>
+<dd><p>This method is invoked just before the client closes the window.</p>
+</dd></dl>
+
+<dl class="method">
+<dt>
+<code class="descname">do_delay</code><span class="sig-paren">(</span><em>data</em><span class="sig-paren">)</span></dt>
+<dd><p>Processes the data after delay amount of time if the client is in slow network.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>data</strong> (<em>dictionary</em>) – The data dictionary sent from the server.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt>
+<code class="descname">draw_blank_canvas</code><span class="sig-paren">(</span><span class="sig-paren">)</span></dt>
+<dd><p>Draws a blank canvas where the points will be in future to be clicked.</p>
+</dd></dl>
+
+<dl class="method">
+<dt>
+<code class="descname">draw_squares</code><span class="sig-paren">(</span><span class="sig-paren">)</span></dt>
+<dd><p>Draws squares on the main canvas of the board.</p>
+</dd></dl>
+
+<dl class="method">
+<dt>
+<code class="descname">handle_connections</code><span class="sig-paren">(</span><em>square_id</em>, <em>clicked_at</em>, <em>amount=5</em><span class="sig-paren">)</span></dt>
+<dd><p>This method is invoked on square is clicked.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>square_id</strong> (<em>int</em>) – id of the square</li>
+<li><strong>clicked_at</strong> (<em>datetime.datetime</em>) – the time when square is clicked.</li>
+<li><strong>amount</strong> (<em>int</em><em>, </em><em>optional</em>) – Score to increase. Defaults to 5.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt>
+<code class="descname">join_click_handler</code><span class="sig-paren">(</span><em>event</em><span class="sig-paren">)</span></dt>
+<dd><p>This method is ran after the join button is clicked.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>event</strong> (<em>tkinter.Event</em>) – Button click event</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt>
+<code class="descname">make_form</code><span class="sig-paren">(</span><span class="sig-paren">)</span></dt>
+<dd><p>Makes a blank form for the user to input the server address.</p>
+</dd></dl>
+
+<dl class="method">
+<dt>
+<code class="descname">on_game_end</code><span class="sig-paren">(</span><span class="sig-paren">)</span></dt>
+<dd><p>This method is invoked when there is no more squares on the screen.</p>
+</dd></dl>
+
+<dl class="method">
+<dt>
+<code class="descname">send_and_receive_data</code><span class="sig-paren">(</span><em>data</em><span class="sig-paren">)</span></dt>
+<dd><p>Sends data to server and received the response from the server.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>data</strong> (<em>dictionary</em>) – Data dictionary which has to be sent.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Response dictionary from server.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">dictionary</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt>
+<code class="descname">show</code><span class="sig-paren">(</span><span class="sig-paren">)</span></dt>
+<dd><p>Shows the screen.</p>
+</dd></dl>
+
+<dl class="method">
+<dt>
+<code class="descname">show_final_status</code><span class="sig-paren">(</span><em>final_ranks</em><span class="sig-paren">)</span></dt>
+<dd><p>Shows the final ranks of all of the players after the game is over.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>final_ranks</strong> (<em>list</em>) – List of the players along with their rank and ids.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt>
+<code class="descname">show_status</code><span class="sig-paren">(</span><span class="sig-paren">)</span></dt>
+<dd><p>After the game over, server’s data broadcast is handled by this method.</p>
+</dd></dl>
+
+<dl class="method">
+<dt>
+<code class="descname">square_click_handler</code><span class="sig-paren">(</span><em>event</em><span class="sig-paren">)</span></dt>
+<dd><p>This method is invoked when user clicks on a square.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>event</strong> (<em>tkinter.Event</em>) – click event</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt>
+<code class="descname">square_clicked</code><span class="sig-paren">(</span><em>square_id</em>, <em>clicked_at</em>, <em>amount=5</em><span class="sig-paren">)</span></dt>
+<dd><p>This square is clicked when the square is clicked.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>square_id</strong> (<em>int</em>) – id of the square</li>
+<li><strong>clicked_at</strong> (<em>datetime.datetime</em>) – time when square is clicked by the user.</li>
+<li><strong>amount</strong> (<em>int</em><em>, </em><em>optional</em>) – Score obtained by clicking on a square. Defaults to 5.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt>
+<code class="descname">tcp_connection</code><span class="sig-paren">(</span><em>connection_socket</em>, <em>addr</em><span class="sig-paren">)</span></dt>
+<dd><p>TCP Connection of the client side.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>connection_socket</strong> (<em>socket.socket</em>) – connection socket of the client through which client will talk with the server</li>
+<li><strong>addr</strong> (<em>tuple</em>) – IP and Port tuple of the sender.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt>
+<code class="descname">tcp_server</code><span class="sig-paren">(</span><span class="sig-paren">)</span></dt>
+<dd><p>TCP server of the client side.</p>
+</dd></dl>
+
+<dl class="method">
+<dt>
+<code class="descname">up_tcp_server</code><span class="sig-paren">(</span><span class="sig-paren">)</span></dt>
+<dd><p>Starts the tcp server of the client side of the application in a different thread.</p>
+</dd></dl>
+
+<dl class="method">
+<dt>
+<code class="descname">update_point_canvas</code><span class="sig-paren">(</span><em>new_point</em><span class="sig-paren">)</span></dt>
+<dd><p>Updates point-canvas and shows the score to client.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>new_point</strong> (<em>int</em>) – user’s score</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt>
+<code class="descname">write_on_canvas</code><span class="sig-paren">(</span><em>canvas</em>, <em>text</em>, <em>x</em>, <em>y</em><span class="sig-paren">)</span></dt>
+<dd><p>Writes text on the (x,y) position of the canvas</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>canvas</strong> (<em>tkinter.Canvas</em>) – An canvas object</li>
+<li><strong>text</strong> (<em>str</em>) – The string to be written on the canvas</li>
+<li><strong>x</strong> (<em>int</em>) – x coordinate of the text</li>
+<li><strong>y</strong> (<em>int</em>) – y coordinate of the text</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="src.client.client.up_client">
+<code class="descclassname">src.client.client.</code><code class="descname">up_client</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#src.client.client.up_client" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+</div>
+<div class="section" id="module-src.client">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-src.client" title="Permalink to this headline">¶</a></h2>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">Multiplayer Game</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">src</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="src.html">src package</a></li>
+</ul>
+</li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+  <li><a href="modules.html">src</a><ul>
+  <li><a href="src.html">src package</a><ul>
+      <li>Previous: <a href="src.html" title="previous chapter">src package</a></li>
+      <li>Next: <a href="src.database.html" title="next chapter">src.database package</a></li>
+  </ul></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2022, Rittwick.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.8.5</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.8</a>
+      
+      |
+      <a href="_sources/src.client.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>
