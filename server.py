@@ -1,3 +1,5 @@
+"""This is the server side of the application."""
+
 import datetime
 import json
 from socket import *
@@ -50,7 +52,19 @@ def generate_points(width, height, side_len, n=100):
 
 
 class Server():
+    """This is the server of the application. This acts as an central authority.
+    """
+
     def __init__(self, ip, port, number_of_points=5, start_match_after=10):
+        """Constructor of the Server class in which one tcp server is running.
+
+        Args:
+            ip (str): ip address of the server's tcp server
+            port (int): port number of the server's tcp server
+            number_of_points (int, optional): Number of squares on the board. Defaults to 5.
+            start_match_after (datetime.datetime, optional): Seconds, after this amount of seconds since the server starts the points will be drawn on the canvas of the clients. Defaults to 10.
+        """
+
         self.ip = ip 
         self.port = port 
         self.buffer_size = 1024
@@ -66,16 +80,29 @@ class Server():
         self.database.insert_points(self.coordinates)
 
     def up_tcp_server(self):
+        """Starting up an TCP server on a different thread of the client.
+        """
+
         thread = threading.Thread(target=self.tcp_server)
         thread.start()
     
     def tcp_server(self):
+        """TCP Server of the client side.
+        """
+
         while True:
             connection_socket, addr = self.tcp_socket.accept()
             thread = threading.Thread(target=self.tcp_connection, args=(connection_socket, addr))
             thread.start()
     
     def tcp_connection(self, connection_socket, addr):
+        """This TCP connection analyzes the data came from client and send appropriate messages to the clients.
+
+        Args:
+            connection_socket (socket.socket): Through this socket the communication happens.
+            addr (tuple): The ip address and port number of the server.
+        """
+        
         while True:
             data = connection_socket.recv(self.buffer_size).decode()
             data = json.loads(data) 
@@ -147,16 +174,16 @@ class Server():
 
                 
             # {'purpose': 'dis-connecting', 'client-id':client_id}
-            # elif purpose=='dis-connecting':
-            #     client_id = data.get('client-id')
-            #     connection_socket.send(json.dumps({'purpose':'quit'}).encode())
-            #     for c in self.clients:
-            #         if c.get('id')==client_id:
-            #             c.get('client-tcp-socket').close()
-            #             more_clients = self.database.decrease_player(client_id)
-            #             if more_clients==0:
-            #                 print(f'Number of clients {more_clients}')
-            #                 # exit(1)
+            elif purpose=='dis-connecting':
+                client_id = data.get('client-id')
+                connection_socket.send(json.dumps({'purpose':'quit'}).encode())
+                for c in self.clients:
+                    if c.get('id')==client_id:
+                        c.get('client-tcp-socket').close()
+                        more_clients = self.database.decrease_player(client_id)
+                        if more_clients==0:
+                            print(f'Number of clients {more_clients}')
+                            # exit(1)
 
 if __name__=='__main__':
-    server = Server(gethostbyname(gethostname()), 20000, number_of_points=2, start_match_after=10)
+    server = Server(gethostbyname(gethostname()), 20000, number_of_points=5, start_match_after=10)
