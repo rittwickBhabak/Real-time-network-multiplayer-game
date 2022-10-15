@@ -5,7 +5,7 @@ from tkinter import *
 from socket import *
 import threading 
 import json 
-from measurements import get_canvas_width, get_canvas_height, get_root_width, get_root_height, get_form_width, get_form_height, get_status_width, get_status_height, get_my_point_width, get_my_point_height, get_square_side_length
+from .shared.measurements.measurements import get_canvas_width, get_canvas_height, get_root_width, get_root_height, get_form_width, get_form_height, get_status_width, get_status_height, get_my_point_width, get_my_point_height, get_square_side_length
 
 CANVAS_WIDTH = get_canvas_width()
 CANVAS_HEIGHT = get_canvas_height()
@@ -445,13 +445,19 @@ class Client():
         # self.send_and_receive_data({'purpose': 'dis-connecting', 'client-id':self.client_id})
         # quit()
         
+def up_client():
+    ip = input('Enter client ip address: ')
+    port = int(input('Enter client port number: '))
+    client = Client(ip, port)
+    client.show()
+
 
 if __name__=='__main__':
-    # client_number = input('Enter client number: ')
-    client_number = '1'
+    client_number = input('Enter client number: ')
+    # client_number = '1'
 
     if client_number=='1':
-        client = Client("192.168.0.102", 30001, "192.168.0.100", 20000, "Rittwick 1", False)
+        client = Client("192.168.0.100", 30001, "192.168.0.100", 20000, "Rittwick 1", False)
     elif client_number=='2':
         client = Client("192.168.0.100", 30002, "192.168.0.100", 20000, "Rittwick 2", False)
     elif client_number=='3':

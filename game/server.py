@@ -6,8 +6,8 @@ from socket import *
 import threading
 import random 
 
-from database import Database 
-from measurements import *
+from .database import Database 
+from .shared.measurements.measurements import *
 
 CANVAS_WIDTH = get_canvas_width()
 CANVAS_HEIGHT = get_canvas_height()
@@ -184,6 +184,12 @@ class Server():
                         if more_clients==0:
                             print(f'Number of clients {more_clients}')
                             # exit(1)
+def up_server():
+    ip = input('Enter server ip address: ')
+    port = 20000
+    number_of_points=int(input('Enter number of points on the screen: '))
+    start_match_after = int(input('How many seconds after starting the server the game will begin: '))
+    Server(ip, port, number_of_points,start_match_after)
 
 if __name__=='__main__':
     server = Server(gethostbyname(gethostname()), 20000, number_of_points=5, start_match_after=10)

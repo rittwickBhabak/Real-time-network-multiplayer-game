@@ -2,6 +2,7 @@
 test_util/
 prototype - Copy/
 rough-work/
+testenv/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
